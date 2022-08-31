@@ -4,7 +4,7 @@ import { db } from "@utils/admin";
 
 import { UserConfig, getDefaultConfig } from "./userConfig";
 import { UserTier,  getDefaultUserTier } from "./userTier";
-import { validateUserData } from "./userValidator";
+import validateUserUpdateData from "./userValidator";
 
 const USER_COLLECTION = 'users';
 
@@ -100,7 +100,7 @@ async function updateUser(request: Request, response: Response) {
         avatar: request.body.avatar,
     }
     
-    const { valid, errors } = validateUserData(data);
+    const { valid, errors } = validateUserUpdateData(data);
     if (!valid) return response.status(400).json(errors);
 
     const identifier = request.params.identifier;

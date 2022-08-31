@@ -25,10 +25,8 @@ async function loginUser(request: Request, response: Response): Promise<Response
     const auth: Auth = getAuth();
     
     return await signInWithEmailAndPassword(auth, data.email, data.password)
-        .then((data) => {
-            return data.user.getIdToken();
-        })
-        .then((token) => {
+        .then(async (data) => {
+            const token = await data.user.getIdToken();
             return response.json({ token });
         })
         .catch((error) => {
