@@ -79,7 +79,7 @@ async function getUserData(identifier: string): Promise<User> {
 }
 
 async function getUser(request: Request, response: Response): Promise<Response<any>> {
-    const identifier = request.params.identifier;
+    const identifier = request.params.userId;
 
     return getUserData(identifier)
         .then((userData) => {
@@ -103,7 +103,7 @@ async function updateUser(request: Request, response: Response) {
     const { valid, errors } = validateUserUpdateData(data);
     if (!valid) return response.status(400).json(errors);
 
-    const identifier = request.params.identifier;
+    const identifier = request.params.userId;
 
     return db.collection(USER_COLLECTION).doc(identifier).update(data)
         .then(() => {

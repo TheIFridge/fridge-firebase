@@ -51,7 +51,7 @@ async function signUpUser(request: Request, response: Response): Promise<Respons
                 data.last_name
             );
 		
-			db.collection(`users`).add(userCredentials);
+			db.collection(`users`).doc(userId).set(userCredentials);
 			return response.status(201).json({ userToken });
         })
         .catch((error) => {

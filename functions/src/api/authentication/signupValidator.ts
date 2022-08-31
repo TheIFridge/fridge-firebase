@@ -13,9 +13,14 @@ const validateSignupData = async (data: SignUpData): Promise<SignupValidatorOutp
 
 	if (isEmpty(data.email)) {
 		errors.email = 'Must not be empty';
-	} else if (!isEmail(data.email)) {
-		errors.email = 'Must be valid email address';
-	}
+	} else {
+        const emailExists = (await fetchSignInMethodsForEmail(getAuth(), data.email)).length != 0;
+        if (emailExists) errors.email = 'Email already exists!'
+
+        if (!isEmail(data.email)) {
+            errors.email = 'Must be valid email address';
+        }
+    } 
 
     if (isEmpty(data.first_name)) errors.first_name = 'Must not be empty';
     if (isEmpty(data.last_name)) errors.last_name = 'Must not be empty';
@@ -23,9 +28,6 @@ const validateSignupData = async (data: SignUpData): Promise<SignupValidatorOutp
 	if (isEmpty(data.password)) errors.password = 'Must not be empty';
 
 	if (data.password !== data.confirmPassword) errors.confirmPassword = 'Passowrds must be the same';
-
-    const emailExists = (await fetchSignInMethodsForEmail(getAuth(), data.email)).length != 0;
-    if (!emailExists) errors.email = 'Email already exists!'
 
     return {
         errors,

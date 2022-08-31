@@ -1,5 +1,8 @@
 import { FirebaseOptions } from "firebase/app";
 
+import * as dotenv from "dotenv";
+dotenv.config();
+
 const config: FirebaseOptions = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,

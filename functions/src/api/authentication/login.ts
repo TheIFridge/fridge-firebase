@@ -1,4 +1,5 @@
-import { getAuth, signInWithEmailAndPassword, Auth } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getApp } from "firebase/app";
 import { Request, Response } from "express";
 
 import validateLoginData from "./loginValidator";
@@ -22,7 +23,7 @@ async function loginUser(request: Request, response: Response): Promise<Response
     const { valid, errors } = validateLoginData(data);
     if (!valid) return response.status(400).json(errors);
 
-    const auth: Auth = getAuth();
+    const auth = getAuth(getApp());
     
     return await signInWithEmailAndPassword(auth, data.email, data.password)
         .then(async (data) => {
