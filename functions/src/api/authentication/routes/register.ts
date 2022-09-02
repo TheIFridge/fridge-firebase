@@ -1,30 +1,41 @@
-import { getAuth, createUserWithEmailAndPassword, Auth } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, Auth } from "firebase/auth";
 import { Request, Response } from "express";
 
-import { getDefaultUser } from "@api/users/users";
 import { db } from "@utils/admin";
 
-import validateSignupData from "./signupValidator";
+import { isEmpty, isEmail } from "@utils/validators";
+import { userDefaults } from "@api/users/defaults";
 
-interface SignUpData {
-	username: string;
-    first_name: string;
-    last_name: string;
-	password: string;
-	confirmPassword: string;
-	email: string;
-}
 
-interface SignUpError {
-	username?: string;
-    first_name?: string;
-    last_name?: string;
-	password?: string;
-	confirmPassword?: string;
-	email?: string;
-}
 
-async function signUpUser(request: Request, response: Response): Promise<Response<any>> {
+const validateSignupData = async (data: SignUpData): Promise<SignupValidatorOutput> => {
+    let errors: SignUpError = {};
+
+	if (isEmpty(data.email)) {
+		errors.email = 'Must not be empty';
+	} else {
+        const emailExists = (await fetchSignInMethodsForEmail(getAuth(), data.email)).length != 0;
+        if (emailExists) errors.email = 'Email already exists!'
+
+        if (!isEmail(data.email)) {
+            errors.email = 'Must be valid email address';
+        }
+    } 
+
+    if (isEmpty(data.first_name)) errors.first_name = 'Must not be empty';
+    if (isEmpty(data.last_name)) errors.last_name = 'Must not be empty';
+	if (isEmpty(data.username)) errors.username = 'Must not be empty';
+	if (isEmpty(data.password)) errors.password = 'Must not be empty';
+
+	if (data.password !== data.confirmPassword) errors.confirmPassword = 'Passowrds must be the same';
+
+    return {
+        errors,
+        valid: Object.keys(errors).length === 0 ? true : false
+    };
+};
+
+export async function register(request: Request, response: Response): Promise<Response<any>> {
     const data: SignUpData = {
         username: request.body.username,
         first_name: request.body.first_name,
@@ -44,12 +55,7 @@ async function signUpUser(request: Request, response: Response): Promise<Respons
 			const userId = userCreds.user.uid;
 			const userToken = await userCreds.user.getIdToken();
 
-			const userCredentials = getDefaultUser(
-                userId,
-                data.username,
-                data.first_name,
-                data.last_name
-            );
+			const userCredentials = userDefaults(userId, data.username, data.first_name, data.last_name);
 		
 			db.collection(`users`).doc(userId).set(userCredentials);
 			return response.status(201).json({ userToken });
@@ -73,6 +79,3 @@ async function signUpUser(request: Request, response: Response): Promise<Respons
 			);
         }); 
 }
-
-export { SignUpData, SignUpError };
-export default signUpUser;

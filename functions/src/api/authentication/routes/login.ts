@@ -2,19 +2,21 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getApp } from "firebase/app";
 import { Request, Response } from "express";
 
-import validateLoginData from "./loginValidator";
+import { isEmpty } from "@utils/validators";
 
-interface LoginData {
-    email: string;
-    password: string;
-}
+const validateLoginData = (data: LoginData): LoginValidatorOutput => {
+    let errors: LoginError = {};
 
-interface LoginError {
-    email?: string;
-    password?: string;
-}
+    if (isEmpty(data.email)) errors.email = 'Must not be empty';
+    if (isEmpty(data.password)) errors.password = 'Must not be  empty';
+    
+    return {
+        errors,
+        valid: Object.keys(errors).length === 0 ? true : false
+    };
+};
 
-async function loginUser(request: Request, response: Response): Promise<Response<any>> {
+export async function login(request: Request, response: Response): Promise<Response<any>> {
     const data: LoginData = {
         email: request.body.email,
         password: request.body.password
@@ -35,6 +37,3 @@ async function loginUser(request: Request, response: Response): Promise<Response
             return response.status(403).json({ general: 'wrong credentials, please try again'});
         })
 }
-
-export { LoginData, LoginError };
-export default loginUser;
