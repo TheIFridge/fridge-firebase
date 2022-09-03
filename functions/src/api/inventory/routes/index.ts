@@ -1,2 +1,5 @@
-export * from './getInventoryItem'
-export * from './updateInventoryItem'
+export * from './inventory/getInventory'
+export * from './inventory/updateInventory'
+export * from './userIngredient/updateUserIngredient'
+export * from './userIngredient/addUserIngredient'
+export * from './userIngredient/deleteUserIngredient'

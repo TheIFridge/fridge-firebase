@@ -14,4 +14,8 @@ const config: FirebaseOptions = {
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
+if (!config.apiKey) {
+    throw new Error("Missing Firebase API Key");
+}
+
 export default config;

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { getInventoryData } from "../inventory"
+import { getInventoryData } from "@api/inventory/inventory";
 
 export async function getInventory(request: Request, response: Response): Promise<Response<any>> {
     const identifier = request.params.userId;

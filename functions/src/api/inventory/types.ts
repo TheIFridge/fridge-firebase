@@ -17,7 +17,6 @@ interface InventoryError {
 }
 
 interface UserIngredient {
-    identifier: string;
     ingredient: Ingredient;
     quantity: number;
     expiry: Date;

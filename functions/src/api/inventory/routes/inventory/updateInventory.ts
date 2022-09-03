@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { updateInventoryData } from "../inventory"
+import { updateInventoryData } from "../../inventory"
 
 interface InventoryValidatorOutput {
     errors: InventoryError;

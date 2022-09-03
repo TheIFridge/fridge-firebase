@@ -1,3 +1,5 @@
+const INGREDIENT_COLLECTION = 'ingredient';
+
 interface Store {
     identifier: string;
     name: string;
@@ -30,6 +32,30 @@ interface Ingredient {
     name: string;
     flagged: FlaggedIngredient
     stores: Store[];
+    images?: string[];
+    description?: string;
+    price?: number;
+    weight?: number;
+    dietary?: string[];
+}
+
+interface IngredientData {
+    identifier: string;
+    name: string;
+    flagged: FlaggedIngredient
+    stores: Store[];
+    images?: string[];
+    description?: string;
+    price?: number;
+    weight?: number;
+    dietary?: string[];
+}
+
+interface IngredientError {
+    identifier?: string;
+    name?: string;
+    flagged?: FlaggedIngredient
+    stores?: Store[];
     images?: string[];
     description?: string;
     price?: number;

@@ -38,9 +38,9 @@ async function updateInventoryData(identifier: string, data: InventoryData) {
     });
 }
 
-async function addInventoryItem(data: UserIngredientData) {
+async function addInventoryItem(userId: string, data: UserIngredientData) {
     return new Promise<void>((response, reject) => {
-        return db.collection(INVENTORY_COLLECTION).add(data)
+        return db.collection(`${INVENTORY_COLLECTION}\\${userId}`).add(data)
             .then((result) => {
                 response();
             })
