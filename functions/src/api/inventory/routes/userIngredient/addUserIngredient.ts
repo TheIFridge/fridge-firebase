@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import { addInventoryItem } from "@api/inventory/inventory";
 import { getIngredient } from "@api/food/food";
 
+import { UserIngredientData } from "@api/inventory/types";
+
 export async function addUserIngredient(request: Request, response: Response): Promise<Response<any>> {
     const userId = request.params.userId;
 

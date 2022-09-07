@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 
 import { isEmpty } from "@utils/validators";
 
-import { updateUserData } from "../users"
+import * as users from "../users"
+
+import { UserError, UserData } from "../types";
 
 interface UserValidatorOutput {
     errors: UserError;
@@ -36,7 +38,7 @@ async function updateUser(request: Request, response: Response) {
 
     const identifier = request.params.userId;
 
-    return updateUserData(identifier, data)
+    return users.updateUser(identifier, data)
         .then((userData) => {
             return response.json(userData);
         })

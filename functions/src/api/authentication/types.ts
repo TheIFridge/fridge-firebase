@@ -1,4 +1,4 @@
-interface SignUpData {
+export interface SignUpData {
 	username: string;
     first_name: string;
     last_name: string;
@@ -7,7 +7,7 @@ interface SignUpData {
 	email: string;
 }
 
-interface SignUpError {
+export interface SignUpError {
 	username?: string;
     first_name?: string;
     last_name?: string;
@@ -16,22 +16,22 @@ interface SignUpError {
 	email?: string;
 }
 
-interface SignupValidatorOutput {
+export interface SignupValidatorOutput {
     errors: SignUpError;
     valid: boolean;
 }
 
-interface LoginData {
+export interface LoginData {
     email: string;
     password: string;
 }
 
-interface LoginError {
+export interface LoginError {
     email?: string;
     password?: string;
 }
 
-interface LoginValidatorOutput {
+export interface LoginValidatorOutput {
     errors: LoginError;
     valid: boolean;
 }

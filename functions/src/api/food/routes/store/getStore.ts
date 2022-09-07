@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 
 import * as food from "@api/food/food";
 
-export async function getIngredient(request: Request, response: Response): Promise<Response<any>> {
+export async function getStore(request: Request, response: Response): Promise<Response<any>> {
     const identifier = request.params.userId;
 
-    return food.getIngredient(identifier)
-        .then((inventoryData) => {
-            return response.json(inventoryData);
+    return food.getStore(identifier)
+        .then((data) => {
+            return response.json(data);
         })
         .catch((error) => {
             // TODO: Handle error so we don't expose internal server errors to the user

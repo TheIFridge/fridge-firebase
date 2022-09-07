@@ -1,11 +1,15 @@
-const INGREDIENT_COLLECTION = 'ingredient';
+export const INGREDIENT_COLLECTION = 'ingredient';
+export const RECIPE_COLLECTION = 'recipe';
+export const RECIPE_INGREDIENT_COLLECTION = 'recipeIngredient';
+export const STORE_COLLECTION = 'store';
 
-interface Store {
+export interface Store {
     identifier: string;
     name: string;
 }
 
-interface Recipe {
+export interface Recipe {
+    identifier: string;
     title: string;
     description: string;
     ingredients: RecipeIngredient[];
@@ -19,7 +23,21 @@ interface Recipe {
     cookingDuration?: string;
 }
 
-interface RecipeIngredient {
+export interface RecipeError {
+    title?: string;
+    description?: string;
+    ingredients?: string;
+    instructions?: string;
+    tags?: string;
+    images?: string;
+    nutrition?: string;
+    mealtime?: string;
+    servings?: string;
+    prepDuration?: string;
+    cookingDuration?: string;
+}
+
+export interface RecipeIngredient {
     ingredient: Ingredient;
     min_quantity: number;
     max_quantity?: number;
@@ -27,7 +45,7 @@ interface RecipeIngredient {
     measurement_unit: string;
 }
 
-interface Ingredient {
+export interface Ingredient {
     identifier: string;
     name: string;
     flagged: FlaggedIngredient
@@ -39,19 +57,7 @@ interface Ingredient {
     dietary?: string[];
 }
 
-interface IngredientData {
-    identifier: string;
-    name: string;
-    flagged: FlaggedIngredient
-    stores: Store[];
-    images?: string[];
-    description?: string;
-    price?: number;
-    weight?: number;
-    dietary?: string[];
-}
-
-interface IngredientError {
+export interface IngredientError {
     identifier?: string;
     name?: string;
     flagged?: FlaggedIngredient
@@ -63,7 +69,7 @@ interface IngredientError {
     dietary?: string[];
 }
 
-interface FlaggedIngredient {
+export interface FlaggedIngredient {
     flagged: boolean;
     reason: string;
     date: Date;

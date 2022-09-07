@@ -6,7 +6,7 @@ import { db } from "@utils/admin";
 import { isEmpty, isEmail } from "@utils/validators";
 import { userDefaults } from "@api/users/defaults";
 
-
+import { SignUpData, SignUpError, SignupValidatorOutput } from "../types";
 
 const validateSignupData = async (data: SignUpData): Promise<SignupValidatorOutput> => {
     let errors: SignUpError = {};

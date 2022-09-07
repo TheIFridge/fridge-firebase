@@ -1,34 +1,36 @@
-const INVENTORY_COLLECTION = 'inventory';
+import { Ingredient } from "@api/food/types";
 
-interface Inventory {
+export const INVENTORY_COLLECTION = 'inventory';
+
+export interface Inventory {
     ingredients: UserIngredient[];
     reminder_enabled: boolean;
     expiry_enabled: boolean;
 }
 
-interface InventoryData {
+export interface InventoryData {
     reminder_enabled?: boolean;
     expiry_enabled?: boolean;
 }
 
-interface InventoryError {
+export interface InventoryError {
     reminder_enabled?: string;
     expiry_enabled?: string;
 }
 
-interface UserIngredient {
+export interface UserIngredient {
     ingredient: Ingredient;
     quantity: number;
     expiry: Date;
 }
 
-interface UserIngredientData {
+export interface UserIngredientData {
     ingredient?: Ingredient;
     quantity?: number;
     expiry?: Date;
 }
 
-interface UserIngredientError {
+export interface UserIngredientError {
     ingredient?: string;
     quantity?: string;
     expiry?: string;

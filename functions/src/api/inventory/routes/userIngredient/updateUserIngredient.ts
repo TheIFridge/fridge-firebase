@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 
 import { updateInventoryItem } from "@api/inventory/inventory";
 
+import { UserIngredientError, UserIngredientData } from "@api/inventory/types";
+
 interface UserIngredientValidatorOutput {
     errors: UserIngredientError;
     valid: boolean;

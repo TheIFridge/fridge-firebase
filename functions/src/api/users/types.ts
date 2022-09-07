@@ -1,6 +1,6 @@
-const USER_COLLECTION = 'users';
+export const USER_COLLECTION = 'users';
 
-interface User {
+export interface User {
     identifier: string,
     username: string,
     first_name: string,
@@ -12,28 +12,28 @@ interface User {
     avatar?: string
 }
 
-interface UserConfig {
+export interface UserConfig {
     isDarkMode: boolean,
 }
 
-interface UserPreference {
+export interface UserPreference {
     requirements: string[],
 }
 
-type Tier = 'Free' | 'Light' | 'Premium' | 'Premium+';
+export type Tier = 'Free' | 'Light' | 'Premium' | 'Premium+';
 
-interface UserTier {
+export interface UserTier {
     tier: Tier
 }
 
-interface UserError {
+export interface UserError {
     username?: string,
     first_name?: string,
     last_name?: string,
     avatar?: string,
 }
 
-interface UserData {
+export interface UserData {
     username?: string,
     first_name?: string,
     last_name?: string,

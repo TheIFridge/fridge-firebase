@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 
-import * as user from "../users"
+import * as food from "@api/food/food";
 
-export async function getUser(request: Request, response: Response): Promise<Response<any>> {
+export async function getRecipe(request: Request, response: Response): Promise<Response<any>> {
     const identifier = request.params.userId;
 
-    return user.getUser(identifier)
+    return food.getRecipe(identifier)
         .then((data) => {
             return response.json(data);
         })

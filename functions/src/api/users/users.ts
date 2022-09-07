@@ -3,8 +3,9 @@ import { WriteResult } from "@google-cloud/firestore"
 import { db } from "@utils/admin";
 
 import * as defaults from './defaults';
+import { USER_COLLECTION, User, UserData } from "./types";
 
-async function getUserData(identifier: string): Promise<User> {
+async function getUser(identifier: string): Promise<User> {
     return new Promise<User>((response, reject) => {
         return db.collection(USER_COLLECTION).doc(identifier).get()
             .then((data) => {
@@ -33,7 +34,7 @@ async function getUserData(identifier: string): Promise<User> {
     });
 }
 
-async function updateUserData(identifier: string, data: UserData) {
+async function updateUser(identifier: string, data: UserData) {
     return new Promise<WriteResult>((response, reject) => {
         return db.collection(USER_COLLECTION).doc(identifier).update(data)
             .then((result) => {
@@ -45,4 +46,4 @@ async function updateUserData(identifier: string, data: UserData) {
     });
 }
 
-export { getUserData, updateUserData };
+export { getUser, updateUser };

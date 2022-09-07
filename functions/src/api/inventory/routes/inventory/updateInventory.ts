@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 
 import { updateInventoryData } from "../../inventory"
 
+import { InventoryError, InventoryData } from "@api/inventory/types";
+
 interface InventoryValidatorOutput {
     errors: InventoryError;
     valid: boolean;

@@ -1,3 +1,4 @@
+import { UserConfig, UserPreference, UserTier, User } from "./types";
 
 export const userConfigDefaults: UserConfig = {
     isDarkMode: false

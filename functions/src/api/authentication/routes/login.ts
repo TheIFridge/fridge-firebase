@@ -4,6 +4,8 @@ import { Request, Response } from "express";
 
 import { isEmpty } from "@utils/validators";
 
+import { LoginData, LoginError, LoginValidatorOutput } from "../types";
+
 const validateLoginData = (data: LoginData): LoginValidatorOutput => {
     let errors: LoginError = {};
 
