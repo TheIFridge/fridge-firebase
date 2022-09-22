@@ -32,7 +32,7 @@ async function getInventoryData(identifier: string) {
 
 async function updateInventoryData(identifier: string, data: InventoryData) {
     return new Promise<WriteResult>((response, reject) => {
-        return db.collection(INVENTORY_COLLECTION).doc(identifier).update(data)
+        return db.collection(INVENTORY_COLLECTION).doc(identifier).set(data, { merge: true })
             .then((result) => {
                 response(result);
             })

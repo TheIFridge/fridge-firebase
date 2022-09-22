@@ -19,4 +19,12 @@ const authenticate = () => (request: Request, response: Response, next: Function
         });
 }
 
-export default authenticate;
+const hasParam = (...param: string[]) => (request: Request, response: Response, next: Function) => {
+    for (let i = 0; i < param.length; i++) {
+        if (!request.params[param[i]]) return response.status(400).json({ error: `Missing ${param[i]} param` });
+    }
+
+    return next();
+}
+
+export { authenticate, hasParam };

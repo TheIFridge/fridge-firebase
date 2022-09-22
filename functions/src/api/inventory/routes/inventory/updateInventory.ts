@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
-import { updateInventoryData } from "../../inventory"
-
 import { InventoryError, InventoryData } from "@api/inventory/types";
+
+import { updateInventoryData } from "../../inventory"
 
 interface InventoryValidatorOutput {
     errors: InventoryError;
@@ -12,7 +12,8 @@ interface InventoryValidatorOutput {
 const validateInventoryUpdateData = (data: InventoryData): InventoryValidatorOutput => {
     let errors: InventoryError = {};
 
-    // validators
+    if (data.reminder_enabled == undefined) errors.reminder_enabled = 'Must not be empty';
+    if (data.expiry_enabled == undefined) errors.expiry_enabled = 'Must not be empty';
     
     return {
         errors,
@@ -29,7 +30,7 @@ async function updateInventory(request: Request, response: Response) {
     const { valid, errors } = validateInventoryUpdateData(data);
     if (!valid) return response.status(400).json(errors);
 
-    const identifier = request.params.w;
+    const identifier = request.params.userId;
 
     return updateInventoryData(identifier, data)
         .then((inventoryData) => {

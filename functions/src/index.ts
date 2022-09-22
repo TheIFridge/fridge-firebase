@@ -32,15 +32,15 @@ app.post('/users/:userId/inventory/:ingredientId', isAuthenticated, inventory.up
 app.put('/users/:userId/inventory/:ingredientId', isAuthenticated, inventory.addUserIngredient);
 app.delete('/users/:userId/inventory/:ingredientId', isAuthenticated, inventory.deleteUserIngredient);
 
-app.get('/ingredient/:ingredientId', isAdministrator, food.getIngredient);
+app.get('/ingredient/:ingredientId', isAuthenticated, food.getIngredient);
 app.post('/ingredient/:ingredientId', isAdministrator, food.updateIngredient);
 app.put('/ingredient/:ingredientId', isAdministrator, food.addIngredient);
 
-app.get('/recipe/:recipeId', isAdministrator, food.getRecipe);
+app.get('/recipe/:recipeId', isAuthenticated, food.getRecipe);
 app.post('/recipe/:recipeId', isAdministrator, food.updateRecipe);
 app.put('/recipe/:recipeId', isAdministrator, food.addRecipe);
 
-app.get('/store/:storeId', isAdministrator, food.getStore);
+app.get('/store/:storeId', isAuthenticated, food.getStore);
 app.post('/store/:storeId', isAdministrator, food.updateStore);
 app.put('/store/:storeId', isAdministrator, food.addStore);
 

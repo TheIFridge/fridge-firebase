@@ -31,6 +31,7 @@ export interface UserError {
     first_name?: string,
     last_name?: string,
     avatar?: string,
+    other?: string
 }
 
 export interface UserData {

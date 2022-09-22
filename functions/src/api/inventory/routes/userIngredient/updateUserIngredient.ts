@@ -30,7 +30,7 @@ async function updateUserIngredient(request: Request, response: Response) {
     const { valid, errors } = validateUserIngredientUpdateData(data);
     if (!valid) return response.status(400).json(errors);
 
-    const identifier = request.params.w;
+    const identifier = request.params.ingredientId;
 
     return updateInventoryItem(identifier, data)
         .then((userIngredientData) => {

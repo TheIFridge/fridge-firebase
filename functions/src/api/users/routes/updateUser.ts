@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { isEmpty } from "@utils/validators";
 
 import * as users from "../users"
-
 import { UserError, UserData } from "../types";
 
 interface UserValidatorOutput {
@@ -11,13 +10,15 @@ interface UserValidatorOutput {
     valid: boolean;
 }
 
-const validateUserUpdateData = (data: UserData): UserValidatorOutput => {
+const validateUserUpdateData = (data: UserData, userId: string): UserValidatorOutput => {
     let errors: UserError = {};
 
     if (isEmpty(data.username)) errors.username = 'Must not be empty';
     if (isEmpty(data.first_name)) errors.first_name = 'Must not be  empty';
     if (isEmpty(data.last_name)) errors.last_name = 'Must not be  empty';
     if (isEmpty(data.avatar)) errors.avatar = 'Must not be  empty';
+
+    if (isEmpty(userId)) errors.other = 'Must not be empty';
     
     return {
         errors,
@@ -32,11 +33,11 @@ async function updateUser(request: Request, response: Response) {
         last_name: request.body.last_name,
         avatar: request.body.avatar,
     }
-    
-    const { valid, errors } = validateUserUpdateData(data);
-    if (!valid) return response.status(400).json(errors);
 
     const identifier = request.params.userId;
+    
+    const { valid, errors } = validateUserUpdateData(data, identifier);
+    if (!valid) return response.status(400).json(errors);
 
     return users.updateUser(identifier, data)
         .then((userData) => {
