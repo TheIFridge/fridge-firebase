@@ -12,7 +12,7 @@ export interface Recipe {
     identifier: string;
     title: string;
     description: string;
-    ingredients: RecipeIngredient[];
+    ingredients: string[];
     instructions: string;
     tags: string[];
     images?: string[];
