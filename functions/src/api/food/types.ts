@@ -48,8 +48,8 @@ export interface RecipeIngredient {
 export interface Ingredient {
     identifier: string;
     name: string;
-    flagged: FlaggedIngredient
     stores: Store[];
+    flagged?: FlaggedIngredient
     images?: string[];
     description?: string;
     price?: number;
@@ -74,4 +74,12 @@ export interface FlaggedIngredient {
     reason?: string;
     date?: number;
     users?: string[];
+}
+
+export interface SearchRecipeQuery {
+    ingredients: [];
+}
+
+export interface SearchIngredientQuery {
+    name: string;
 }

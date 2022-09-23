@@ -33,7 +33,8 @@ export async function login(request: Request, response: Response): Promise<Respo
     return await signInWithEmailAndPassword(auth, data.email, data.password)
         .then(async (data) => {
             const token = await data.user.getIdToken();
-            return response.json({ token });
+            const userId = await data.user.uid;
+            return response.json({ token, userId });
         })
         .catch((error) => {
             console.error(error);
