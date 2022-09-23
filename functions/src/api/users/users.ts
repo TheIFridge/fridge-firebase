@@ -20,6 +20,7 @@ async function getUser(identifier: string): Promise<User> {
                     username: currentData.username,
                     first_name: currentData.first_name,
                     last_name: currentData.last_name,
+                    email: currentData.email,
                     joined: currentData.joined,
                     config: currentData.config || defaults.userConfigDefaults,
                     userTier: currentData.userTier || defaults.userTierDefaults,

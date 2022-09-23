@@ -1,8 +1,5 @@
 import * as functions from "firebase-functions";
 import express, { Express} from "express";
-import { initializeApp } from "firebase/app";
-
-import config from "@utils/config";
 
 import * as auth from "@api/authentication/routes";
 import { isAdministrator, isAuthenticated } from "@api/authentication/routes";
@@ -11,9 +8,6 @@ import * as inventory from "@api/inventory/routes";
 import * as food from "@api/food/routes";
 
 import middleware from "@middleware";
-
-
-initializeApp(config);
 
 const app: Express = express();
 
@@ -37,13 +31,15 @@ app.get('/ingredient/:ingredientId', isAuthenticated, food.getIngredient);
 app.post('/ingredient/:ingredientId', isAdministrator, food.updateIngredient);
 app.put('/ingredient/:ingredientId', isAdministrator, food.addIngredient);
 
-app.get('/ingredient/query', isAuthenticated, food.queryIngredients);
+app.get('/ingredients', isAuthenticated, food.getIngredients);
+app.get('/ingredients/query', isAuthenticated, food.queryIngredients);
 
 app.get('/recipe/:recipeId', isAuthenticated, food.getRecipe);
 app.post('/recipe/:recipeId', isAdministrator, food.updateRecipe);
 app.put('/recipe/:recipeId', isAdministrator, food.addRecipe);
 
-app.get('/recipe/query', isAuthenticated, food.queryRecipes);
+app.get('/recipes', isAuthenticated, food.getIngredients);
+app.get('/recipes/query', isAuthenticated, food.queryRecipes);
 
 app.get('/store/:storeId', isAuthenticated, food.getStore);
 app.post('/store/:storeId', isAdministrator, food.updateStore);

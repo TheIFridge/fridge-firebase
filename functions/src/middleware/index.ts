@@ -10,7 +10,8 @@ const middleware = () => {
         }),
         helmet(),
         cors({
-            origin: '*'
+            origin: '*',
+            
         })
     ]
 }

@@ -1,8 +1,8 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getApp } from "firebase/app";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Request, Response } from "express";
 
 import { isEmpty } from "@utils/validators";
+import { auth } from "@utils/admin";
 
 import { LoginData, LoginError, LoginValidatorOutput } from "../types";
 
@@ -25,15 +25,12 @@ export async function login(request: Request, response: Response): Promise<Respo
     }
 
     const { valid, errors } = validateLoginData(data);
-    console.log(errors);
     if (!valid) return response.status(400).json(errors);
-
-    const auth = getAuth(getApp());
     
     return await signInWithEmailAndPassword(auth, data.email, data.password)
         .then(async (data) => {
             const token = await data.user.getIdToken();
-            const userId = await data.user.uid;
+            const userId = data.user.uid;
             return response.json({ token, userId });
         })
         .catch((error) => {

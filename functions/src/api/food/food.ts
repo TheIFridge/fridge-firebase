@@ -2,9 +2,36 @@ import { db } from "@utils/admin";
 
 import { INGREDIENT_COLLECTION, RECIPE_COLLECTION, STORE_COLLECTION, Ingredient, Recipe, Store } from "./types";
 
+function getIngredients() {
+    return new Promise<Ingredient[]>((response, reject) => {
+        return db.collection(INGREDIENT_COLLECTION).limit(10).get()
+            .then((data) => {
+                const ingredients: Ingredient[] = [];
+
+                data.forEach((doc) => {
+                    const currentData = doc.data();
+
+                    const ingredientData: Ingredient = {
+                        identifier: currentData.identifier,
+                        name: currentData.name,
+                        stores: currentData.stores,
+                        description: currentData.description,
+                        images: currentData.images
+                    }
+
+                    ingredients.push(ingredientData);
+                });
+
+                response(ingredients);
+            }).catch((error) => {
+                reject(error);
+            });
+    });
+}
+
 function queryIngredients(name: string): Promise<Ingredient[]> {
     return new Promise<Ingredient[]>((response, reject) => {
-        return db.collection(INGREDIENT_COLLECTION).where('name', 'in', name).get()
+        return db.collection(INGREDIENT_COLLECTION).orderBy(`name/${name}`).get()
             .then((data) => {
                 const ingredients: Ingredient[] = [];
 
@@ -81,6 +108,41 @@ function updateIngredient(ingredient: Ingredient) {
                 reject(error);
             });
     });
+}
+
+function getRecipes() {
+    return new Promise<Recipe[]>((response, reject) => {
+        return db.collection(RECIPE_COLLECTION).limit(10).get()
+            .then((data) => {
+                const recipes: Recipe[] = [];
+
+                data.forEach((doc) => {
+                    const currentData = doc.data();
+
+                    const recipeData: Recipe = {
+                        identifier: currentData.identifier,
+                        title: currentData.title,
+                        description: currentData.description,
+                        ingredients: currentData.ingredients,
+                        instructions: currentData.instructions,
+                        tags: currentData.tags,
+                        images: currentData.images,
+                        nutrition: currentData.nutrition,
+                        mealtime: currentData.mealtime,
+                        servings: currentData.servings,
+                        prepDuration: currentData.prepDuration,
+                        cookingDuration: currentData.cookingDuration,
+                    }
+
+                    recipes.push(recipeData);
+                });
+
+                response(recipes);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    })
 }
 
 function queryRecipes(ingredients: string[]) {
@@ -224,4 +286,4 @@ function updateStore(store: Store) {
     });
 }
 
-export { queryIngredients, getIngredient, addIngredient, updateIngredient, addRecipe, getRecipe, updateRecipe, addStore, getStore, updateStore, queryRecipes };
+export { getIngredients, queryIngredients, getIngredient, addIngredient, updateIngredient, getRecipes, addRecipe, getRecipe, updateRecipe, addStore, getStore, updateStore, queryRecipes };
