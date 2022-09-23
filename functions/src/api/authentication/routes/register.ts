@@ -55,7 +55,7 @@ export async function register(request: Request, response: Response): Promise<Re
 			const userId = userCreds.user.uid;
 			const userToken = await userCreds.user.getIdToken();
 
-			const userCredentials = userDefaults(userId, data.username, data.first_name, data.last_name);
+			const userCredentials = userDefaults(userId, data.username, data.first_name, data.last_name, data.email);
 		
 			db.collection(`users`).doc(userId).set(userCredentials);
 			return response.status(201).json({ userToken });

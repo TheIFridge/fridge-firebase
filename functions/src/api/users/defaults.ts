@@ -16,13 +16,15 @@ export const userDefaults = (
     identifier: string,
     username: string,
     first_name: string,
-    last_name: string
+    last_name: string,
+    email: string,
 ): User => {
     return {
         identifier,
         username,
         first_name,
         last_name,
+        email,
         joined: new Date().toISOString(),
         config: userConfigDefaults,
         userTier: userTierDefaults,
