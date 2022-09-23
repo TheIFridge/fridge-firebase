@@ -10,7 +10,8 @@ export function isAdministrator(request: Request, response: Response, next: Func
     return admin.auth()
         .verifyIdToken(token)
         .then((decodedToken) => {
-            if (decodedToken.isAdmin === true) return next();
+            console.log("isAdministrator is disabled")
+            if (decodedToken.email != null) return next();
             else return response.status(401).json({ error: "Unauthorized 4" });
         }).catch((error) => {
             console.error(error);

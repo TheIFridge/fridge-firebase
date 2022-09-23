@@ -25,6 +25,7 @@ export async function login(request: Request, response: Response): Promise<Respo
     }
 
     const { valid, errors } = validateLoginData(data);
+    console.log(errors);
     if (!valid) return response.status(400).json(errors);
 
     const auth = getAuth(getApp());

@@ -6,17 +6,18 @@ import { getIngredient } from "@api/food/food";
 import { UserIngredientData } from "@api/inventory/types";
 
 export async function addUserIngredient(request: Request, response: Response): Promise<Response<any>> {
+    const ingredientId = request.params.ingredientId;
     const userId = request.params.userId;
 
-    return await getIngredient(request.body.ingredient)
+    return await getIngredient(ingredientId)
         .then((ingredient) => {
             const userIngredient: UserIngredientData = {
-                ingredient: ingredient,
+                ingredient: ingredient.identifier,
                 quantity: request.body.quantity,
                 expiry: request.body.expiry                                    
             }
             
-            return addInventoryItem(userId, userIngredient)
+            return addInventoryItem(userId, ingredientId, userIngredient)
                     .then((data) => {
                         return response.json(data);
                     })

@@ -3,9 +3,10 @@ import { Request, Response } from "express";
 import { deleteInventoryItem } from "@api/inventory/inventory";
 
 export async function deleteUserIngredient(request: Request, response: Response): Promise<Response<any>> {
-    const identifier = request.params.userId;
+    const userId = request.params.userId;
+    const ingredientId = request.params.ingredientId;
 
-    return deleteInventoryItem(identifier)
+    return deleteInventoryItem(userId, ingredientId)
         .then((data) => {
             return response.json(data);
         })

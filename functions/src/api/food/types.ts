@@ -60,18 +60,18 @@ export interface Ingredient {
 export interface IngredientError {
     identifier?: string;
     name?: string;
-    flagged?: FlaggedIngredient
-    stores?: Store[];
-    images?: string[];
+    flagged?: string
+    stores?: string;
+    images?: string;
     description?: string;
-    price?: number;
-    weight?: number;
-    dietary?: string[];
+    price?: string;
+    weight?: string;
+    dietary?: string;
 }
 
 export interface FlaggedIngredient {
     flagged: boolean;
-    reason: string;
-    date: Date;
-    users: string[];
+    reason?: string;
+    date?: number;
+    users?: string[];
 }

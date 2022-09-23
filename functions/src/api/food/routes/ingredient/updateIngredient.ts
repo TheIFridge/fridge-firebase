@@ -6,7 +6,7 @@ import { Ingredient } from "@api/food/types";
 
 export async function updateIngredient(request: Request, response: Response): Promise<Response<any>> {
     const ingredientData: Ingredient = {
-        identifier: request.body.identifier,
+        identifier: request.params.ingredientId,
         name: request.body.name,
         flagged: request.body.flagged,
         stores: request.body.stores,

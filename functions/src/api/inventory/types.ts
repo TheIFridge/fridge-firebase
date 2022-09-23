@@ -3,7 +3,7 @@ import { Ingredient } from "@api/food/types";
 export const INVENTORY_COLLECTION = 'inventory';
 
 export interface Inventory {
-    ingredients: UserIngredient[];
+    ingredients: UserIngredientData[];
     reminder_enabled: boolean;
     expiry_enabled: boolean;
 }
@@ -25,9 +25,9 @@ export interface UserIngredient {
 }
 
 export interface UserIngredientData {
-    ingredient?: Ingredient;
-    quantity?: number;
-    expiry?: Date;
+    ingredient: string;
+    quantity: number;
+    expiry: Date;
 }
 
 export interface UserIngredientError {

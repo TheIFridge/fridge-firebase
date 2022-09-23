@@ -6,7 +6,7 @@ import { Recipe } from "@api/food/types";
 
 export async function updateRecipe(request: Request, response: Response): Promise<Response<any>> {
     const recipeData: Recipe = {
-        identifier: request.body.identifier,
+        identifier: request.params.recipeId,
         title: request.body.title,
         description: request.body.description,
         ingredients: request.body.ingredients,

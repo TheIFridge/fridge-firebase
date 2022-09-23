@@ -12,6 +12,7 @@ import * as food from "@api/food/routes";
 
 import middleware from "@middleware";
 
+
 initializeApp(config);
 
 const app: Express = express();

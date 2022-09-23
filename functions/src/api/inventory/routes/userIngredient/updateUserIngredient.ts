@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { updateInventoryItem } from "@api/inventory/inventory";
 
 import { UserIngredientError, UserIngredientData } from "@api/inventory/types";
+import { getIngredient } from "@api/food/food";
 
 interface UserIngredientValidatorOutput {
     errors: UserIngredientError;
@@ -12,7 +13,9 @@ interface UserIngredientValidatorOutput {
 const validateUserIngredientUpdateData = (data: UserIngredientData): UserIngredientValidatorOutput => {
     let errors: UserIngredientError = {};
 
-    // validators
+    if (data.ingredient == undefined) errors.ingredient = 'Must not be empty';
+    if (data.quantity == undefined) errors.quantity = 'Must not be empty';
+    if (data.expiry == undefined) errors.expiry = 'Must not be empty';
     
     return {
         errors,
@@ -22,7 +25,7 @@ const validateUserIngredientUpdateData = (data: UserIngredientData): UserIngredi
 
 async function updateUserIngredient(request: Request, response: Response) {
     const data: UserIngredientData = {
-        ingredient: request.body.ingredient,
+        ingredient: await getIngredient(request.params.ingredientId).then((data) => data.identifier).catch((err) => err),
         quantity: request.body.quantity,
         expiry: request.body.expiry,
     }
@@ -30,9 +33,10 @@ async function updateUserIngredient(request: Request, response: Response) {
     const { valid, errors } = validateUserIngredientUpdateData(data);
     if (!valid) return response.status(400).json(errors);
 
-    const identifier = request.params.ingredientId;
+    const userId = request.params.userId;
+    const ingredientId = request.params.userId;
 
-    return updateInventoryItem(identifier, data)
+    return updateInventoryItem(userId, ingredientId, data)
         .then((userIngredientData) => {
             return response.json(userIngredientData);
         })

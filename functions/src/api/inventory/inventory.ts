@@ -1,14 +1,14 @@
-import { WriteResult } from "@google-cloud/firestore"
+import { DocumentData, WriteResult } from "@google-cloud/firestore"
 
 import { db } from "@utils/admin";
 
 import { inventoryDefaults } from "./defaults";
 import { INVENTORY_COLLECTION, Inventory, InventoryData, UserIngredientData } from "./types";
 
-async function getInventoryData(identifier: string) {
+async function getInventoryData(userId: string) {
     return new Promise<Inventory>((response, reject) => {
-        return db.collection(INVENTORY_COLLECTION).doc(identifier).get()
-            .then((data) => {
+        return db.collection(INVENTORY_COLLECTION).doc(userId).get()
+            .then(async (data) => {
                 const currentData = data.data();
 
                 if (!currentData) {
@@ -17,7 +17,7 @@ async function getInventoryData(identifier: string) {
                 }
 
                 const inventoryData: Inventory = {
-                    ingredients: currentData.ingredients || [],
+                    ingredients: await getInventoryItems(userId).catch((err) => []) || [],
                     reminder_enabled: currentData.reminder_enabled || false,
                     expiry_enabled: currentData.expiry_enabled || false,
                 }
@@ -35,6 +35,26 @@ async function updateInventoryData(identifier: string, data: InventoryData) {
         return db.collection(INVENTORY_COLLECTION).doc(identifier).set(data, { merge: true })
             .then((result) => {
                 response(result);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+
+async function getInventoryItems(userId: string) {
+    return new Promise<UserIngredientData[]>((response, reject) => {
+        return db.collection(INVENTORY_COLLECTION).doc(userId).collection('ingredient').get()
+            .then((result) => {
+                const userIngredientData: UserIngredientData[] = result.docs.map(data => {
+                    return {
+                        ingredient: data.data().ingredient,
+                        quantity: data.data().quantity,
+                        expiry: data.data().expiry
+                    }
+                });
+
+                response(userIngredientData);
             })
             .catch((error) => {
                 reject(error);
@@ -60,9 +80,9 @@ async function getInventoryItem(userId: string, ingredientId: string) {
     });
 }
 
-async function addInventoryItem(userId: string, data: UserIngredientData) {
+async function addInventoryItem(userId: string, ingredientId: string, data: UserIngredientData) {
     return new Promise<void>((response, reject) => {
-        return db.collection(`${INVENTORY_COLLECTION}\\${userId}`).add(data)
+        return db.collection(INVENTORY_COLLECTION).doc(userId).collection('ingredient').doc(ingredientId).set(data)
             .then((result) => {
                 response();
             })
@@ -72,9 +92,9 @@ async function addInventoryItem(userId: string, data: UserIngredientData) {
     });
 }
 
-async function updateInventoryItem(identifier: string, data: UserIngredientData) {
-    return new Promise<WriteResult>((response, reject) => {
-        return db.collection(INVENTORY_COLLECTION).doc(identifier).update(data)
+async function updateInventoryItem(userId: string, ingredientId: string, data: UserIngredientData) {
+    return new Promise<DocumentData>((response, reject) => {
+        return db.collection(INVENTORY_COLLECTION).doc(userId).collection('ingredient').doc(ingredientId).set(data)
             .then((result) => {
                 response(result);
             })
@@ -84,9 +104,9 @@ async function updateInventoryItem(identifier: string, data: UserIngredientData)
     });
 }
 
-async function deleteInventoryItem(identifier: string) {
+async function deleteInventoryItem(userId: string, ingredientId: string) {
     return new Promise<WriteResult>((response, reject) => {
-        return db.collection(INVENTORY_COLLECTION).doc(identifier).delete()
+        return db.collection(INVENTORY_COLLECTION).doc(userId).collection('ingredient').doc(ingredientId).delete()
             .then((result) => {
                 response(result);
             })
@@ -96,4 +116,4 @@ async function deleteInventoryItem(identifier: string) {
     });
 }
 
-export { getInventoryData, updateInventoryData, getInventoryItem, addInventoryItem, updateInventoryItem, deleteInventoryItem };
+export { getInventoryData, updateInventoryData, getInventoryItems, getInventoryItem, addInventoryItem, updateInventoryItem, deleteInventoryItem };

@@ -9,7 +9,7 @@ function getIngredient(identifier: string): Promise<Ingredient> {
                 const currentData = data.data();
 
                 if (!currentData) {
-                    return reject(new Error(`Ingredient with identifier ${identifier} not found`));
+                    return reject(`Ingredient with identifier ${identifier} not found`);
                 }
 
                 const ingredientData: Ingredient = {

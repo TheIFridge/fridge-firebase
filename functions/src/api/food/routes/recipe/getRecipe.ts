@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import * as food from "@api/food/food";
 
 export async function getRecipe(request: Request, response: Response): Promise<Response<any>> {
-    const identifier = request.params.userId;
+    const identifier = request.params.recipeId;
 
     return food.getRecipe(identifier)
         .then((data) => {
