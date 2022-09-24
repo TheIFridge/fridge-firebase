@@ -1,3 +1,4 @@
+import { getIngredient } from "@api/food/food";
 import { DocumentData, WriteResult } from "@google-cloud/firestore"
 
 import { db } from "@utils/admin";
@@ -16,8 +17,10 @@ async function getInventoryData(userId: string) {
                     return;
                 }
 
+                const userIngredientData: UserIngredientData[] = await getInventoryItems(userId).catch((err) => []);
+
                 const inventoryData: Inventory = {
-                    ingredients: await getInventoryItems(userId).catch((err) => []) || [],
+                    ingredients: userIngredientData || [],
                     reminder_enabled: currentData.reminder_enabled || false,
                     expiry_enabled: currentData.expiry_enabled || false,
                 }
@@ -45,14 +48,17 @@ async function updateInventoryData(identifier: string, data: InventoryData) {
 async function getInventoryItems(userId: string) {
     return new Promise<UserIngredientData[]>((response, reject) => {
         return db.collection(INVENTORY_COLLECTION).doc(userId).collection('ingredient').get()
-            .then((result) => {
-                const userIngredientData: UserIngredientData[] = result.docs.map(data => {
+            .then(async (result) => {
+                const userIngredientData: UserIngredientData[] = await Promise.all(result.docs.map(async (data) => {
                     return {
-                        ingredient: data.data().ingredient,
+                        ingredient: await getIngredient(data.data().ingredient).catch((err) => data.data().ingredient),
                         quantity: data.data().quantity,
                         expiry: data.data().expiry
-                    }
-                });
+                    } as UserIngredientData;
+                })).catch((err) => {
+                    console.log(err)
+                    return err;
+                })
 
                 response(userIngredientData);
             })
