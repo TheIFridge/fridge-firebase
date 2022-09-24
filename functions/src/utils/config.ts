@@ -1,5 +1,8 @@
 import { FirebaseOptions } from "firebase/app";
 
+import * as dotenv from "dotenv";
+dotenv.config();
+
 const config: FirebaseOptions = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -10,5 +13,9 @@ const config: FirebaseOptions = {
     appId: process.env.FIREBASE_APP_ID,
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
+
+if (!config.apiKey) {
+    throw new Error("Missing Firebase API Key");
+}
 
 export default config;
