@@ -8,6 +8,7 @@ export async function updateIngredient(request: Request, response: Response): Pr
     const ingredientData: Ingredient = {
         identifier: request.params.ingredientId,
         name: request.body.name,
+        generic_name: request.body.generic_name,
         flagged: request.body.flagged,
         stores: request.body.stores,
         images: request.body.images,

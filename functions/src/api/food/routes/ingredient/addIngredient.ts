@@ -15,6 +15,7 @@ const validateIngredient = (data: Ingredient): IngredientValidatorOutput => {
 
     if (data.identifier == undefined) errors.identifier = 'Must not be empty';
     if (data.name == undefined) errors.name = 'Must not be empty';
+    if (data.generic_name == undefined) errors.generic_name = 'Must not be empty';
     if (data.stores == undefined) errors.stores = 'Must not be empty';
     
     return {
@@ -27,6 +28,7 @@ export async function addIngredient(request: Request, response: Response): Promi
     const ingredientData: Ingredient = {
         identifier: request.params.ingredientId,
         name: request.body.name,
+        generic_name: request.body.generic_name,
         flagged: flaggedIngredientDefaults(),
         stores: request.body.stores,
         images: request.body.images,

@@ -14,6 +14,7 @@ function getIngredients() {
                     const ingredientData: Ingredient = {
                         identifier: currentData.identifier,
                         name: currentData.name,
+                        generic_name: currentData.generic_name,
                         stores: currentData.stores,
                         description: currentData.description,
                         images: currentData.images
@@ -41,6 +42,7 @@ function queryIngredients(name: string): Promise<Ingredient[]> {
                     const ingredientData: Ingredient = {
                         identifier: currentData.identifier,
                         name: currentData.name,
+                        generic_name: currentData.generic_name,
                         stores: currentData.stores,
                         description: currentData.description,
                         images: currentData.images
@@ -69,6 +71,7 @@ function getIngredient(identifier: string): Promise<Ingredient> {
                 const ingredientData: Ingredient = {
                     identifier: currentData.identifier,
                     name: currentData.name,
+                    generic_name: currentData.generic_name,
                     flagged: currentData.flagged,
                     stores: currentData.stores,
                     images: currentData.images,

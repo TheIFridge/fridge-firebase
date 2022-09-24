@@ -48,6 +48,7 @@ export interface RecipeIngredient {
 export interface Ingredient {
     identifier: string;
     name: string;
+    generic_name: string;
     stores: Store[];
     flagged?: FlaggedIngredient
     images?: string[];
@@ -60,6 +61,7 @@ export interface Ingredient {
 export interface IngredientError {
     identifier?: string;
     name?: string;
+    generic_name?: string;
     flagged?: string
     stores?: string;
     images?: string;
