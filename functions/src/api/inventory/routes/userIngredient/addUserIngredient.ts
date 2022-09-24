@@ -28,7 +28,22 @@ export async function addUserIngredient(request: Request, response: Response): P
                     });
         })
         .catch((error) => {
-            console.log(error);
-            return response.status(500).json({ error: error.message });
+            const userIngredient: UserIngredientData = {
+                ingredient: ingredientId,
+                quantity: request.body.quantity,
+                expiry: request.body.expiry                                    
+            }
+            
+            return addInventoryItem(userId, ingredientId, userIngredient)
+                    .then((data) => {
+                        return response.json(data);
+                    })
+                    .catch((error) => {
+                        // TODO: Handle error so we don't expose internal server errors to the user
+                        console.error(error);
+                        return response.status(500).json({ error: error.message });
+                    });
+            // console.log(error);
+            // return response.status(500).json({ error: error.message });
         });
 }
