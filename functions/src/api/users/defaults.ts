@@ -1,33 +1,33 @@
-import { UserConfig, UserPreference, UserTier, User } from "./types";
+import {UserConfig, UserPreference, UserTier, User} from "./types";
 
 export const userConfigDefaults: UserConfig = {
-    isDarkMode: false
-}
+  isDarkMode: false,
+};
 
 export const userPreferenceDefaults: UserPreference = {
-    requirements: []
-}
+  requirements: [],
+};
 
 export const userTierDefaults: UserTier = {
-    tier: 'Free'
-}
+  tier: "Free",
+};
 
 export const userDefaults = (
     identifier: string,
     username: string,
-    first_name: string,
-    last_name: string,
+    firstName: string,
+    lastName: string,
     email: string,
 ): User => {
-    return {
-        identifier,
-        username,
-        first_name,
-        last_name,
-        email,
-        joined: new Date().toISOString(),
-        config: userConfigDefaults,
-        userTier: userTierDefaults,
-        preferences: userPreferenceDefaults
-    }    
-}
+  return {
+    identifier,
+    username,
+    first_name: firstName,
+    last_name: lastName,
+    email,
+    joined: new Date().toISOString(),
+    config: userConfigDefaults,
+    userTier: userTierDefaults,
+    preferences: userPreferenceDefaults,
+  };
+};

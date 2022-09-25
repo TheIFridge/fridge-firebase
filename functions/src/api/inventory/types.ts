@@ -1,6 +1,6 @@
-import { Ingredient } from "@api/food/types";
+import {Ingredient} from "@api/food/types";
 
-export const INVENTORY_COLLECTION = 'inventory';
+export const INVENTORY_COLLECTION = "inventory";
 
 export interface Inventory {
     ingredients: UserIngredientData[] | Ingredient[];

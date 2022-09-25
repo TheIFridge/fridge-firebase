@@ -1,4 +1,4 @@
-export const USER_COLLECTION = 'users';
+export const USER_COLLECTION = "users";
 
 export interface User {
     identifier: string,
@@ -21,7 +21,7 @@ export interface UserPreference {
     requirements: string[],
 }
 
-export type Tier = 'Free' | 'Light' | 'Premium' | 'Premium+';
+export type Tier = "Free" | "Light" | "Premium" | "Premium+";
 
 export interface UserTier {
     tier: Tier
