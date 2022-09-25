@@ -1,8 +1,7 @@
 {
   "name": "functions",
   "scripts": {
-    "//lint": "eslint --ext .js,.ts .",
-    "lint": "",
+    "lint": "eslint --ext .js,.ts .",
     "build": "tsc && tsc-alias",
     "build:watch": "tsc --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
@@ -20,7 +19,7 @@
     "express-rate-limit": "^6.5.2",
     "firebase": "^9.9.3",
     "firebase-admin": "^10.0.2",
-    "firebase-functions": "^3.18.0",
+    "firebase-functions": "^3.24.0",
     "firebase-tools": "^11.9.0",
     "helmet": "^6.0.0",
     "tsc-alias": "^1.7.0"

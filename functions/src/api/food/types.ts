@@ -1,7 +1,7 @@
-export const INGREDIENT_COLLECTION = 'ingredient';
-export const RECIPE_COLLECTION = 'recipe';
-export const RECIPE_INGREDIENT_COLLECTION = 'recipeIngredient';
-export const STORE_COLLECTION = 'store';
+export const INGREDIENT_COLLECTION = "ingredient";
+export const RECIPE_COLLECTION = "recipe";
+export const RECIPE_INGREDIENT_COLLECTION = "recipeIngredient";
+export const STORE_COLLECTION = "store";
 
 export interface Store {
     identifier: string;

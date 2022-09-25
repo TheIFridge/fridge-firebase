@@ -1,21 +1,19 @@
-import { FirebaseOptions } from "firebase/app";
+import {FirebaseOptions} from "firebase/app";
 
-import * as dotenv from "dotenv";
-dotenv.config();
-
+// https://github.com/firebase/firebase-tools/issues/4239
 const config: FirebaseOptions = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    databaseURL: process.env.FIREBASE_DATABASE_URL,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_APP_ID,
-    measurementId: process.env.FIREBASE_MEASUREMENT_ID
+  apiKey: "AIzaSyBjGNnd8K4U-cXarwJx-DBaU7DjxXFEMxY",
+  authDomain: "ifridge-9bb1e.firebaseapp.com",
+  databaseURL: "https://ifridge-9bb1e-default-rtdb.firebaseio.com",
+  projectId: "ifridge-9bb1e",
+  storageBucket: "ifridge-9bb1e.appspot.com",
+  messagingSenderId: "505666645968",
+  appId: "1:505666645968:web:09548759bb235a3d4293d5",
+  measurementId: "G-51DJVT92FZ",
 };
 
 if (!config.apiKey) {
-    throw new Error("Missing Firebase API Key");
+  throw new Error("Missing FB API Key");
 }
 
 export default config;
