@@ -31,12 +31,22 @@ app.get("/ingredient/:ingredientId", isAuthenticated, food.getIngredient);
 app.post("/ingredient/:ingredientId", isAdministrator, food.updateIngredient);
 app.put("/ingredient/:ingredientId", isAdministrator, food.addIngredient);
 
+app.get("/ingredient/reports", isAdministrator, food.getReportedIngredients);
+app.put("/ingredient/:ingredientId/report", isAdministrator, food.updateReportedIngredient);
+app.post("/ingredient/:ingredientId/report", isAdministrator, food.updateReportedIngredient);
+
+app.get("/ingredient/reports", isAuthenticated, food.getIngredient);
+app.get("/ingredient/:ingredientId/reports", isAuthenticated, food.getIngredient);
+app.post("/ingredient/:ingredientId/reports", isAdministrator, food.updateIngredient);
+
 app.get("/ingredients", isAuthenticated, food.getIngredients);
 app.get("/ingredients/query", isAuthenticated, food.queryIngredients);
 
 app.get("/recipe/:recipeId", isAuthenticated, food.getRecipe);
 app.post("/recipe/:recipeId", isAdministrator, food.updateRecipe);
 app.put("/recipe/:recipeId", isAdministrator, food.addRecipe);
+
+app.put("/recipe/magic", isAdministrator, food.magicRecipe);
 
 app.get("/recipes", isAuthenticated, food.getIngredients);
 app.get("/recipes/query", isAuthenticated, food.queryRecipes);

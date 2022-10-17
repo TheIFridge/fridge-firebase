@@ -13,7 +13,7 @@ const config: FirebaseOptions = {
 };
 
 if (!config.apiKey) {
-  throw new Error("Missing FB API Key");
+  throw new Error("Missing FireBase API Key");
 }
 
 export default config;

@@ -58,6 +58,20 @@ export interface Ingredient {
     dietary?: string[];
 }
 
+export interface PartialIngredient {
+    identifier: string;
+    name?: string;
+    generic_name?: string;
+    stores?: Store[];
+    flagged?: FlaggedIngredient
+    images?: string[];
+    description?: string;
+    price?: number;
+    weight?: number;
+    dietary?: string[];
+}
+
+
 export interface IngredientError {
     identifier?: string;
     name?: string;
@@ -73,9 +87,12 @@ export interface IngredientError {
 
 export interface FlaggedIngredient {
     flagged: boolean;
+    reasons: {[user: string]: FlaggedData};
+}
+
+export interface FlaggedData {
     reason?: string;
     date?: number;
-    users?: string[];
 }
 
 export interface SearchRecipeQuery {
