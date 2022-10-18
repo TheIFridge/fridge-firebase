@@ -3,7 +3,7 @@ import {Request, Response} from "express";
 import {updateInventoryItem} from "@api/inventory/inventory";
 
 import {UserIngredientError, UserIngredientData} from "@api/inventory/types";
-import {getIngredient} from "@api/food/food";
+import {getIngredient} from "@api/food/ingredients";
 
 interface UserIngredientValidatorOutput {
     errors: UserIngredientError;

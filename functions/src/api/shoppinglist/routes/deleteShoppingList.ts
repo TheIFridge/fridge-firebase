@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 
-import * as food from "@api/food/ingredients";
+import * as shoppingList from "@api/shoppinglist/shoppinglist";
 
 /**
  *
@@ -8,10 +8,11 @@ import * as food from "@api/food/ingredients";
  * @param {Response} response
  * @return {Promise<Response>}
  */
-export async function getIngredient(request: Request, response: Response): Promise<Response<any>> {
-  const identifier = request.params.ingredientId;
+export async function deleteShoppingList(request: Request, response: Response): Promise<Response> {
+  const userId = request.user.userId;
+  const shoppingListId = request.params.shoppingListId;
 
-  return food.getIngredient(identifier)
+  return shoppingList.deleteShoppingList(userId, shoppingListId)
       .then((inventoryData) => {
         return response.json(inventoryData);
       })

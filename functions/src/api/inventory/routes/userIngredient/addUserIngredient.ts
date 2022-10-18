@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 
 import {addInventoryItem} from "@api/inventory/inventory";
-import {getIngredient} from "@api/food/food";
+import {getIngredient} from "@api/food/ingredients";
 
 import {UserIngredientData} from "@api/inventory/types";
 

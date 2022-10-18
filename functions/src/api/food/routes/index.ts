@@ -9,6 +9,7 @@ export * from "./recipe/getRecipes";
 export * from "./recipe/updateRecipe";
 export * from "./recipe/queryRecipes";
 export * from "./recipe/magicRecipe";
+export * from "./recipe/synthesizeRecipe";
 export * from "./store/addStore";
 export * from "./store/getStore";
 export * from "./store/updateStore";

@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 
-import * as food from "@api/food/food";
+import * as food from "@api/food/ingredients";
 
 import {Ingredient, IngredientError} from "@api/food/types";
 import {flaggedIngredientDefaults} from "@api/food/defaults";

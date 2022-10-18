@@ -1,4 +1,4 @@
-import {getIngredient} from "@api/food/food";
+import {getIngredient} from "@api/food/ingredients";
 import {DocumentData, WriteResult} from "@google-cloud/firestore";
 
 import {db} from "@utils/admin";
@@ -6,7 +6,7 @@ import {db} from "@utils/admin";
 import {inventoryDefaults} from "./defaults";
 import {INVENTORY_COLLECTION, Inventory, InventoryData, UserIngredientData} from "./types";
 
-/**
+/**l
  *
  * @param {string} userId
  * @return {Promise<Inventory>}

@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 
-import * as food from "@api/food/food";
+import * as food from "@api/food/ingredients";
 
 /**
  *

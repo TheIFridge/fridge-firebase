@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 
-import * as food from "@api/food/ingredients";
+import * as shoppingList from "@api/shoppinglist/shoppinglist";
 
 /**
  *
@@ -8,10 +8,12 @@ import * as food from "@api/food/ingredients";
  * @param {Response} response
  * @return {Promise<Response>}
  */
-export async function getRecipes(request: Request, response: Response): Promise<Response<any>> {
-  return food.getRecipes()
-      .then((data) => {
-        return response.json(data);
+export async function getShoppingList(request: Request, response: Response): Promise<Response<any>> {
+  const userId = request.user.userId;
+
+  return shoppingList.getShoppingList(userId)
+      .then((inventoryData) => {
+        return response.json(inventoryData);
       })
       .catch((error) => {
         // TODO: Handle error so we don't expose internal server errors to the user

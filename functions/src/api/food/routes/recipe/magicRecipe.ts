@@ -1,5 +1,5 @@
 
-import {getIngredient} from "@api/food/food";
+import {getIngredient} from "@api/food/ingredients";
 
 /**
  *

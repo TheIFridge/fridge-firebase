@@ -21,13 +21,13 @@ export interface InventoryError {
 export interface UserIngredient {
     ingredient: Ingredient;
     quantity: number;
-    expiry: Date;
+    expiry?: Date;
 }
 
 export interface UserIngredientData {
     ingredient: string | Ingredient;
     quantity: number;
-    expiry: Date;
+    expiry?: Date;
 }
 
 export interface UserIngredientError {

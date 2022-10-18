@@ -4,6 +4,50 @@ import {RECIPE_COLLECTION, Recipe} from "./types";
 
 /**
  *
+ * @param {string} ingredients
+ * @return {Recipe[]} recipes
+ */
+function synthesizeRecipe(ingredients: string[]) {
+  return new Promise<Recipe[]>((response, reject) => {
+    const query = db.collection(RECIPE_COLLECTION);
+    query.where("ingredients", "in", [[ingredients]]);
+
+    return query.limit(10).get()
+        .then((data) => {
+          const recipes: Recipe[] = [];
+
+          data.forEach((doc) => {
+            const currentData = doc.data();
+
+            const recipeData: Recipe = {
+              identifier: currentData.identifier,
+              title: currentData.title,
+              description: currentData.description,
+              ingredients: currentData.ingredients,
+              instructions: currentData.instructions,
+              tags: currentData.tags,
+              images: currentData.images,
+              nutrition: currentData.nutrition,
+              mealtime: currentData.mealtime,
+              servings: currentData.servings,
+              prepDuration: currentData.prepDuration,
+              cookingDuration: currentData.cookingDuration,
+            };
+
+            recipes.push(recipeData);
+          });
+
+          response(recipes);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+  });
+}
+
+/**
+ *
  * @return {Promise<Recipe[]>}
  */
 function getRecipes() {
@@ -154,5 +198,4 @@ function updateRecipe(recipe: Recipe) {
   });
 }
 
-export { getRecipes, addRecipe, getRecipe, updateRecipe, queryRecipes};
-  
+export {getRecipes, addRecipe, getRecipe, updateRecipe, queryRecipes, synthesizeRecipe};
