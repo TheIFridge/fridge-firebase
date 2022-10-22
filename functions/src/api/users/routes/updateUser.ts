@@ -40,7 +40,7 @@ async function updateUser(request: Request, response: Response) {
     avatar: request.body.avatar,
   };
 
-  const identifier = request.params.userId;
+  const identifier = request.user.userId;
 
   const {valid, errors} = validateUserUpdateData(data, identifier);
   if (!valid) return response.status(400).json(errors);

@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 
-import * as food from "@api/food/ingredients";
+import * as recipe from "@api/food/recipe";
 
 /**
  *
@@ -9,7 +9,7 @@ import * as food from "@api/food/ingredients";
  * @return {Promise<Response>}
  */
 export async function getRecipes(request: Request, response: Response): Promise<Response<any>> {
-  return food.getRecipes()
+  return recipe.getRecipes()
       .then((data) => {
         return response.json(data);
       })

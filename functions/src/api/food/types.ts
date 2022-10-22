@@ -87,7 +87,7 @@ export interface IngredientError {
 
 export interface FlaggedIngredient {
     flagged: boolean;
-    reasons: {[user: string]: FlaggedData};
+    reasons?: {[user: string]: FlaggedData};
 }
 
 export interface FlaggedData {
@@ -95,10 +95,10 @@ export interface FlaggedData {
     date?: number;
 }
 
-export interface SearchRecipeQuery {
-    ingredients: [];
+export interface SearchIngredientQuery {
+    name: string;
 }
 
-export interface SearchIngredientQuery {
+export interface SearchRecipeQuery {
     name: string;
 }

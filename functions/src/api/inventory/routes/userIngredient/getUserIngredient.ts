@@ -9,7 +9,7 @@ import * as inventory from "@api/inventory/inventory";
  * @return {Promise<Response>}
  */
 export async function getUserIngredient(request: Request, response: Response): Promise<Response<any>> {
-  const identifier = request.params.userId;
+  const identifier = request.user.userId;
   const ingredientId = request.params.ingredientId;
 
   return inventory.getInventoryItem(identifier, ingredientId)

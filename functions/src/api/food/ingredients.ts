@@ -37,39 +37,30 @@ function getIngredients() {
 
 /**
  *
- * @param {string} name
- * @param {boolean} flagged
+ * @param {string} ingredientName
  * @return {Promise<Ingredint[]>}
  */
-function queryIngredients(name: string | undefined = undefined, flagged = false): Promise<Ingredient[]> {
-  return new Promise<Ingredient[]>((response, reject) => {
-    const data = db.collection(INGREDIENT_COLLECTION);
-    if (name) data.orderBy(`name/${name}`);
-    if (flagged) data.where("flagged.flagged", "==", true);
-    return data.get()
-        .then((data) => {
-          const ingredients: Ingredient[] = [];
+export async function queryIngredients(ingredientName: string): Promise<Ingredient[]> {
+  const ingredientCollection = await db.collection("ingredient")
+      .where("name", ">=", ingredientName).where("name", "<=", ingredientName + "~")
+      .get();
 
-          data.forEach((doc) => {
-            const currentData = doc.data();
+  const ingredients: Ingredient[] = ingredientCollection.docs.flatMap((doc) => {
+    const currentData = doc.data();
 
-            const ingredientData: Ingredient = {
-              identifier: currentData.identifier,
-              name: currentData.name,
-              generic_name: currentData.generic_name,
-              stores: currentData.stores,
-              description: currentData.description,
-              images: currentData.images,
-            };
+    const ingredientData: Ingredient = {
+      identifier: currentData.identifier,
+      name: currentData.name,
+      generic_name: currentData.generic_name,
+      stores: currentData.stores,
+      description: currentData.description,
+      images: currentData.images,
+    };
 
-            ingredients.push(ingredientData);
-          });
-
-          response(ingredients);
-        }).catch((error) => {
-          reject(error);
-        });
+    return ingredientData;
   });
+
+  return ingredients;
 }
 
 /**
@@ -103,6 +94,44 @@ function getIngredient(identifier: string): Promise<Ingredient> {
           response(ingredientData);
         })
         .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
+  });
+}
+
+/**
+ *
+ * @param {string} identifier
+ * @return {Promise<Ingredient>}
+ */
+export async function getIngredientByName(identifier: string): Promise<Ingredient> {
+  return new Promise<Ingredient>((response, reject) => {
+    return db.collection(INGREDIENT_COLLECTION).where("name", "==", identifier).get()
+        .then((data) => {
+          const currentData = data.docs[0].data();
+
+          if (!currentData) {
+            return reject(new Error(`Ingredient with identifier ${identifier} not found`));
+          }
+
+          const ingredientData: Ingredient = {
+            identifier: currentData.identifier,
+            name: currentData.name,
+            generic_name: currentData.generic_name,
+            flagged: currentData.flagged,
+            stores: currentData.stores,
+            images: currentData.images,
+            description: currentData.description,
+            price: currentData.price,
+            weight: currentData.weight,
+            dietary: currentData.dietary,
+          };
+
+          response(ingredientData);
+        })
+        .catch((error) => {
+          console.log(error);
           reject(error);
         });
   });
@@ -204,5 +233,5 @@ function updateStore(store: Store) {
   });
 }
 
-export {getIngredients, queryIngredients, getIngredient, addIngredient, 
+export {getIngredients, getIngredient, addIngredient,
   updateIngredient, addStore, getStore, updateStore};

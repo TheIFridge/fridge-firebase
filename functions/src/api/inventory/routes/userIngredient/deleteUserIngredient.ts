@@ -9,7 +9,7 @@ import {deleteInventoryItem} from "@api/inventory/inventory";
  * @return {Promise<Response>}
  */
 export async function deleteUserIngredient(request: Request, response: Response): Promise<Response<any>> {
-  const userId = request.params.userId;
+  const userId = request.user.userId;
   const ingredientId = request.params.ingredientId;
 
   return deleteInventoryItem(userId, ingredientId)

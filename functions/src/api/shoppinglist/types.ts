@@ -8,6 +8,6 @@ export interface ShoppingList {
 }
 
 export interface ShoppingIngredient {
-    ingredient: Ingredient;
+    ingredient: Ingredient | string;
     quantity: number;
 }

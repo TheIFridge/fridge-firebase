@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 
-import * as food from "@api/food/ingredients";
+import * as recipe from "@api/food/recipe";
 
 import {Recipe} from "@api/food/types";
 
@@ -24,7 +24,7 @@ export async function addRecipe(request: Request, response: Response): Promise<R
   };
   // TODO: Validator
 
-  return await food.addRecipe(recipeData)
+  return await recipe.addRecipe(recipeData)
       .then((data) => {
         return response.json(data);
       })

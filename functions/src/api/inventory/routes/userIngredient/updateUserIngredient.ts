@@ -39,8 +39,8 @@ async function updateUserIngredient(request: Request, response: Response) {
   const {valid, errors} = validateUserIngredientUpdateData(data);
   if (!valid) return response.status(400).json(errors);
 
-  const userId = request.params.userId;
-  const ingredientId = request.params.userId;
+  const userId = request.user.userId;
+  const ingredientId = request.user.userId;
 
   return updateInventoryItem(userId, ingredientId, data)
       .then((userIngredientData) => {

@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 
 import * as food from "@api/food/recipe";
 
-import {SearchRecipeQuery} from "../../types";
+// import {SearchRecipeQuery} from "../../types";
 
 /**
  *
@@ -11,11 +11,13 @@ import {SearchRecipeQuery} from "../../types";
  * @return {Promise<Response>}
  */
 export async function synthesizeRecipes(request: Request, response: Response) {
-  const queryData: SearchRecipeQuery = {
-    ingredients: request.body.ingredients,
-  };
+  // const queryData: SearchRecipeQuery = {
+  //   name: request.body.ingredients,
+  // };
 
-  return await food.synthesizeRecipe(queryData.ingredients as string[])
+  const data = ["test"];
+
+  return await food.synthesizeRecipe(data)
       .then((data) => {
         return response.json(data);
       })

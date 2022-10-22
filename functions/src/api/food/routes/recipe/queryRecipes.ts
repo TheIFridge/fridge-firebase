@@ -12,10 +12,10 @@ import {SearchRecipeQuery} from "../../types";
  */
 export async function queryRecipes(request: Request, response: Response) {
   const queryData: SearchRecipeQuery = {
-    ingredients: request.body.ingredients,
+    name: request.body.name,
   };
 
-  return await food.queryRecipes(queryData.ingredients)
+  return await food.queryRecipes(queryData.name)
       .then((data) => {
         return response.json(data);
       })

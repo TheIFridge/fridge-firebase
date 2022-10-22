@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 
-import * as food from "@api/food/ingredients";
+import * as recipe from "@api/food/recipe";
 
 import {Recipe} from "@api/food/types";
 
@@ -23,7 +23,7 @@ export async function updateRecipe(request: Request, response: Response): Promis
     mealtime: request.body.mealtime,
   };
 
-  return food.updateRecipe(recipeData)
+  return recipe.updateRecipe(recipeData)
       .then((inventoryData) => {
         return response.json(inventoryData);
       })

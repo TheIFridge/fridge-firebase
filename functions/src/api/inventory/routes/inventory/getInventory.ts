@@ -8,8 +8,8 @@ import {getInventoryData} from "@api/inventory/inventory";
  * @param {Response} response
  * @return {Promise<Response>}
  */
-export async function getInventory(request: Request, response: Response): Promise<Response<any>> {
-  const userId = request.params.userId;
+export async function getInventory(request: Request, response: Response): Promise<Response> {
+  const userId = request.user.userId;
 
   return getInventoryData(userId)
       .then((inventoryData) => {

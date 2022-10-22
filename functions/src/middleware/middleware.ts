@@ -10,7 +10,10 @@ const authenticate = () => (request: Request, response: Response, next: NextFunc
   return admin.auth()
       .verifyIdToken(token)
       .then((decodedToken) => {
-        // request.locals = { user: decodedToken };
+        console.log(decodedToken);
+        request.user = {
+          userId: decodedToken.uid,
+        };
         return next();
       }).catch((error) => {
         // TODO Handle error, token may be expred etc

@@ -85,45 +85,45 @@ function getRecipes() {
   });
 }
 
-/**
-   *
-   * @param {string} ingredients
-   * @return {Promise<Recipe[]>}
-   */
-function queryRecipes(ingredients: string[]) {
-  return new Promise<Recipe[]>((response, reject) => {
-    return db.collection(RECIPE_COLLECTION).where("ingredients", "array-contains-any", ingredients).get()
-        .then((data) => {
-          const recipes: Recipe[] = [];
+// /**
+//    *
+//    * @param {string} ingredients
+//    * @return {Promise<Recipe[]>}
+//    */
+// function queryRecipes(ingredients: string[]) {
+//   return new Promise<Recipe[]>((response, reject) => {
+//     return db.collection(RECIPE_COLLECTION).where("ingredients", "array-contains-any", ingredients).get()
+//         .then((data) => {
+//           const recipes: Recipe[] = [];
 
-          data.forEach((doc) => {
-            const currentData = doc.data();
+//           data.forEach((doc) => {
+//             const currentData = doc.data();
 
-            const recipeData: Recipe = {
-              identifier: currentData.identifier,
-              title: currentData.title,
-              description: currentData.description,
-              ingredients: currentData.ingredients,
-              instructions: currentData.instructions,
-              tags: currentData.tags,
-              images: currentData.images,
-              nutrition: currentData.nutrition,
-              mealtime: currentData.mealtime,
-              servings: currentData.servings,
-              prepDuration: currentData.prepDuration,
-              cookingDuration: currentData.cookingDuration,
-            };
+//             const recipeData: Recipe = {
+//               identifier: currentData.identifier,
+//               title: currentData.title,
+//               description: currentData.description,
+//               ingredients: currentData.ingredients,
+//               instructions: currentData.instructions,
+//               tags: currentData.tags,
+//               images: currentData.images,
+//               nutrition: currentData.nutrition,
+//               mealtime: currentData.mealtime,
+//               servings: currentData.servings,
+//               prepDuration: currentData.prepDuration,
+//               cookingDuration: currentData.cookingDuration,
+//             };
 
-            recipes.push(recipeData);
-          });
+//             recipes.push(recipeData);
+//           });
 
-          response(recipes);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-  });
-}
+//           response(recipes);
+//         })
+//         .catch((error) => {
+//           reject(error);
+//         });
+//   });
+// }
 
 /**
    *
@@ -198,4 +198,38 @@ function updateRecipe(recipe: Recipe) {
   });
 }
 
-export {getRecipes, addRecipe, getRecipe, updateRecipe, queryRecipes, synthesizeRecipe};
+/**
+ *
+ * @param {string} recipeName
+ * @return {Recipe[]} recipes
+ */
+export async function queryRecipes(recipeName: string): Promise<Recipe[]> {
+  const recipeCollection = await db.collection("recipe")
+      .where("title", ">=", recipeName).where("title", "<=", recipeName + "~")
+      .get();
+
+  const recipes: Recipe[] = recipeCollection.docs.flatMap((doc) => {
+    const currentData = doc.data();
+
+    const recipeData: Recipe = {
+      identifier: currentData.identifier,
+      title: currentData.title,
+      description: currentData.description,
+      ingredients: currentData.ingredients,
+      instructions: currentData.instructions,
+      tags: currentData.tags,
+      images: currentData.images,
+      nutrition: currentData.nutrition,
+      mealtime: currentData.mealtime,
+      servings: currentData.servings,
+      prepDuration: currentData.prepDuration,
+      cookingDuration: currentData.cookingDuration,
+    };
+
+    return recipeData;
+  });
+
+  return recipes;
+}
+
+export {getRecipes, addRecipe, getRecipe, updateRecipe, synthesizeRecipe};

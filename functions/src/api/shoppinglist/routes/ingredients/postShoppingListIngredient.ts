@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 
 import * as shoppingList from "@api/shoppinglist/shoppinglist";
-import {ShoppingIngredient} from "../types";
+import {ShoppingIngredient} from "@api/shoppinglist/types";
 
 /**
  *

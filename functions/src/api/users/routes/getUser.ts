@@ -10,7 +10,7 @@ import * as user from "../users";
  * @return {Promise<Response>}
  */
 export async function getUser(request: Request, response: Response): Promise<Response<User>> {
-  const identifier = request.params.userId;
+  const identifier = request.user.userId;
 
   return user.getUser(identifier)
       .then((data) => {

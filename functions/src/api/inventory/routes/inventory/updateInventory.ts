@@ -36,7 +36,7 @@ async function updateInventory(request: Request, response: Response) {
   const {valid, errors} = validateInventoryUpdateData(data);
   if (!valid) return response.status(400).json(errors);
 
-  const identifier = request.params.userId;
+  const identifier = request.user.userId;
 
   return updateInventoryData(identifier, data)
       .then((inventoryData) => {

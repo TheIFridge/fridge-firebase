@@ -33,28 +33,29 @@ app.put("/inventory/:ingredientId", isAuthenticated, inventory.addUserIngredient
 app.delete("/inventory/:ingredientId", isAuthenticated, inventory.deleteUserIngredient);
 
 app.get("/shoppinglist", isAuthenticated, shoppingList.getShoppingList);
+app.put("/shoppinglist", isAuthenticated, shoppingList.putShoppingListIngredient);
+
+app.get("/shoppinglists/:shoppingListId", isAuthenticated, shoppingList.getShoppingList);
+app.put("/shoppinglists/:shoppingListId", isAuthenticated, shoppingList.putShoppingList);
+app.delete("/shoppinglist/:shoppingListId", isAuthenticated, shoppingList.deleteShoppingList);
 
 app.post("/shoppinglist/:shoppingListId/:shoppingIngredientId", isAuthenticated,
     shoppingList.postShoppingListIngredient);
 app.delete("/shoppinglist/:shoppingListId/:shoppingIngredientId", isAuthenticated,
     shoppingList.deleteShoppingListIngredient);
-app.put("/shoppinglist/:shoppingListId", isAuthenticated, shoppingList.putShoppingListIngredient);
-app.delete("/shoppinglist/:shoppingListId", isAuthenticated, shoppingList.deleteShoppingList);
 
-app.get("/favourite/recipe", );
-app.post("/favourite/recipe/:recipeId", );
-app.put("/favourite/recipe/:recipeId", );
-app.delete("/favourite/recipe/:recipeId", );
+app.get("/favourite/ingredient", food.getFavouriteUserIngredients);
+app.put("/favourite/ingredient/:ingredientId", food.putFavouriteUserIngredient);
+app.delete("/favourite/ingredient/:ingredientId", food.deleteFavouriteUserIngredient);
 
-app.get("/favourite/ingredient", );
-app.post("/favourite/ingredient/:ingredientId", );
-app.put("/favourite/ingredient/:ingredientId", );
-app.delete("/favourite/ingredient/:ingredientId", );
+app.get("/favourite/recipe", food.getFavouriteRecipes);
+app.put("/favourite/recipe/:recipeId", food.putFavouriteRecipe);
+app.delete("/favourite/recipe/:recipeId", food.deleteFavouriteRecipe);
 
-app.get("/pricewatch", );
-app.post("/pricewatch/:ingredientId", );
-app.put("/pricewatch/:ingredientId", );
-app.delete("/pricewatch/:ingredientId", );
+// app.get("/pricewatch", );
+// app.post("/pricewatch/:ingredientId", );
+// app.put("/pricewatch/:ingredientId", );
+// app.delete("/pricewatch/:ingredientId", );
 
 /* GLOBAL ENDPOINTS */
 
@@ -65,17 +66,20 @@ app.put("/ingredient/:ingredientId", isAdministrator, food.addIngredient);
 app.get("/ingredient/reports", isAdministrator, food.getReportedIngredients);
 app.put("/ingredient/:ingredientId/report", isAdministrator, food.updateReportedIngredient);
 app.post("/ingredient/:ingredientId/report", isAdministrator, food.updateReportedIngredient);
+app.delete("/ingredient/:ingredientId/report", isAdministrator, food.updateReportedIngredient);
 
 app.get("/ingredient/reports", isAuthenticated, food.getIngredient);
 app.get("/ingredient/:ingredientId/reports", isAuthenticated, food.getIngredient);
 app.post("/ingredient/:ingredientId/reports", isAdministrator, food.updateIngredient);
 
 app.get("/ingredients", isAuthenticated, food.getIngredients);
-app.get("/ingredients/query", isAuthenticated, food.queryIngredients);
+app.post("/ingredients/query", isAuthenticated, food.queryIngredients);
 
 app.get("/recipe/:recipeId", isAuthenticated, food.getRecipe);
 app.post("/recipe/:recipeId", isAdministrator, food.updateRecipe);
 app.put("/recipe/:recipeId", isAdministrator, food.addRecipe);
+
+app.get("/recipes/query", isAdministrator, food.queryRecipes);
 
 app.get("/recipes", isAuthenticated, food.getIngredients);
 app.get("/recipes/synthesize", isAuthenticated, food.synthesizeRecipes);

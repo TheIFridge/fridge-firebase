@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 
 import {addInventoryItem} from "@api/inventory/inventory";
-import {getIngredient} from "@api/food/ingredients";
+import {getIngredientByName} from "@api/food/ingredients";
 
 import {UserIngredientData} from "@api/inventory/types";
 
@@ -13,9 +13,9 @@ import {UserIngredientData} from "@api/inventory/types";
  */
 export async function addUserIngredient(request: Request, response: Response): Promise<Response<any>> {
   const ingredientId = request.params.ingredientId;
-  const userId = request.params.userId;
+  const userId = request.user.userId;
 
-  return await getIngredient(ingredientId)
+  return await getIngredientByName(ingredientId)
       .then((ingredient) => {
         const userIngredient: UserIngredientData = {
           ingredient: ingredient.identifier,

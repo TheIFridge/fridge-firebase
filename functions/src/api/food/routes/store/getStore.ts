@@ -9,7 +9,7 @@ import * as food from "@api/food/ingredients";
  * @return {Promise<Response>}
  */
 export async function getStore(request: Request, response: Response): Promise<Response<any>> {
-  const identifier = request.params.userId;
+  const identifier = request.user.userId;
 
   return food.getStore(identifier)
       .then((data) => {

@@ -9,7 +9,7 @@ import * as food from "@api/food/ingredients";
  * @return {Promise<Response>}
  */
 export async function getReportedIngredients(request: Request, response: Response) {
-  return await food.queryIngredients(undefined, false)
+  return await food.queryIngredients("")
       .then((data) => {
         return response.json(data);
       })

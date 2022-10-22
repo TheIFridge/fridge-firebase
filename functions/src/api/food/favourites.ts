@@ -1,51 +1,38 @@
-import {db} from "@utils/admin";
-
-import {UserIngredientData} from "@api/inventory/types";
-import {Recipe} from "./types";
+import {admin, db} from "@utils/admin";
 
 /**
  *
  * @param {string} userId
- * @return {Promise<Ingredient[]>} ingredients
+ * @param {string} ingredientId
  */
-export async function getFavouriteIngredients(userId: string) {
-
+export async function addFavouriteUserIngredient(userId: string, ingredientId: string) {
+  const favouritesDoc = db.collection("users").doc(userId).collection("data").doc("favourites");
+  return await favouritesDoc.set({"ingredients": ingredientId}, {merge: true});
 }
 
 /**
  *
  * @param {string} userId
- * @param {UserIngredientData} ingredient
+ * @param {string} ingredientId
  */
-export async function putFavouriteIngredient(userId: string, ingredient: UserIngredientData) {
-
+export async function removeFavouriteUserIngredient(userId: string, ingredientId: string) {
+  const favouritesDoc = db.collection("users").doc(userId).collection("data").doc("favourites");
+  return await favouritesDoc.update({
+    "ingredients": admin.firestore.FieldValue.arrayRemove(ingredientId),
+  });
 }
 
 /**
  *
  * @param {string} userId
- * @param {UserIngredientData} ingredientId
  */
-export async function deleteFavouriteIngredient(userId: string, ingredientId: string) {
+export async function getFavouriteUserIngredients(userId: string) {
+  const favouritesDoc = db.collection("users").doc(userId).collection("data").doc("favourites");
+  const data = await (await favouritesDoc.get()).data();
 
-}
+  if (!data) return [];
 
-/**
- *
- * @param {string} userId
- * @return {Promise<Recipe[]>} recipes
- */
-export async function getFavouriteRecipe(userId: string) {
-
-}
-    
-/**
- *
- * @param {string} userId
- * @param {Recipe} recipe
- */
-export async function putFavouriteRecipe(userId: string, recipe: Recipe) {
-
+  return data.data().ingredients;
 }
 
 /**
@@ -53,7 +40,33 @@ export async function putFavouriteRecipe(userId: string, recipe: Recipe) {
  * @param {string} userId
  * @param {string} recipeId
  */
-export async function deleteFavouriteRecipe(userId: string, recipeId: string) {
+export async function addFavouriteRecipe(userId: string, recipeId: string) {
+  const favouritesDoc = db.collection("users").doc(userId).collection("data").doc("favourites");
+  return await favouritesDoc.set({"recipes": recipeId}, {merge: true});
+}
 
+/**
+   *
+   * @param {string} userId
+   * @param {string} recipeId
+   */
+export async function removeFavouriteRecipe(userId: string, recipeId: string) {
+  const favouritesDoc = db.collection("users").doc(userId).collection("data").doc("favourites");
+  return await favouritesDoc.update({
+    "recipes": admin.firestore.FieldValue.arrayRemove(recipeId),
+  });
+}
+
+/**
+   *
+   * @param {string} userId
+   */
+export async function getFavouriteRecipe(userId: string) {
+  const favouritesDoc = db.collection("users").doc(userId).collection("data").doc("favourites");
+  const data = await (await favouritesDoc.get()).data();
+
+  if (!data) return [];
+
+  return data.data().recipes;
 }
 

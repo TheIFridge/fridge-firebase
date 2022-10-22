@@ -1,5 +1,3 @@
-
-import { Ingredient } from "@api/food/types";
 import {DocumentData} from "@google-cloud/firestore";
 import {UserIngredient} from "./types";
 

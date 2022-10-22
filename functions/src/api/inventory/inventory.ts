@@ -6,7 +6,7 @@ import {db} from "@utils/admin";
 import {inventoryDefaults} from "./defaults";
 import {INVENTORY_COLLECTION, Inventory, InventoryData, UserIngredientData} from "./types";
 
-/**l
+/** l
  *
  * @param {string} userId
  * @return {Promise<Inventory>}
@@ -152,18 +152,18 @@ async function updateInventoryItem(userId: string, ingredientId: string, data: U
  * @param {string} ingredientId
  * @return {Promise<WriteResult>}
  */
-async function deleteInventoryItem(userId: string, ingredientId: string) {
-  return new Promise<WriteResult>((response, reject) => {
-    return db.collection(INVENTORY_COLLECTION).doc(userId).collection("ingredient").doc(ingredientId).delete()
-        .then((result) => {
-          response(result);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-  });
+export async function deleteInventoryItem(userId: string, ingredientId: string) {
+  const ingredientDocs = await db.collection(INVENTORY_COLLECTION).doc(userId).collection("ingredient")
+      .where("ingredient", "==", ingredientId)
+      .get();
+
+  if (ingredientDocs.empty) {
+    return new Error("Ingredient not found");
+  }
+
+  return ingredientDocs.docs[0].ref.delete();
 }
 
 export {getInventoryData, updateInventoryData, getInventoryItems,
-  getInventoryItem, addInventoryItem, updateInventoryItem, deleteInventoryItem};
+  getInventoryItem, addInventoryItem, updateInventoryItem};
 
