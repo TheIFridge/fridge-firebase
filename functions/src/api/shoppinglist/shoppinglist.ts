@@ -68,8 +68,7 @@ export async function addShoppingListIngredient(
     ingredient: ShoppingIngredient
 ) {
   const shoppingList = db.collection(USER_COLLECTION).doc(userId).collection("shoppinglist").doc(shoppingListId)
-      .collection("ingredients")
-      .doc(ingredient.ingredient as string);
+      .collection("ingredients").doc(ingredient.ingredient as string);
   return shoppingList.update(ingredient);
 }
 
@@ -88,10 +87,9 @@ export async function updateShoppingListIngredient(
     ingredient: ShoppingIngredient
 ) {
   const shoppingIngredient = db.collection(USER_COLLECTION).doc(userId).collection("shoppinglist")
-      .doc(shoppingListId).collection("ingredients").doc(shoppingIngredientId).collection("ingredients")
-      .doc(shoppingIngredientId);
+      .doc(shoppingListId).collection("ingredients").doc(shoppingIngredientId);
 
-  return shoppingIngredient.update(ingredient);
+  return shoppingIngredient.set(ingredient, {merge: true});
 }
 
 /**
@@ -119,16 +117,21 @@ export async function deleteShoppingListIngredient(
  * @return {Promise<ShoppingIngredient[]>}
  */
 export async function formatShoppingIngredients(userId: string, shoppingListId: string): Promise<ShoppingIngredient[]> {
-  const shopingListCollection = db.collection(USER_COLLECTION).doc(userId).collection("shoppinglist");
-  const ingredientData = await shopingListCollection.doc(shoppingListId).get();
-  const ingredients = ingredientData.get("ingredients") as any[];
+  const shopingListCollection = db.collection(USER_COLLECTION).doc(userId)
+      .collection("shoppinglist").doc(shoppingListId);
+  const ingredientData = await shopingListCollection.collection("ingredients").get();
 
-  if (ingredients == undefined) return [];
+  console.log(ingredientData);
+  console.log(userId);
+  console.log(shoppingListId);
 
-  const stuff = ingredients.flatMap(async (ingredient) => {
+  if (ingredientData == undefined) return [];
+
+  const stuff = ingredientData.docs.flatMap(async (doc) => {
+    const data = doc.data();
     return {
-      ingredient: await getIngredient(ingredient.ingredient).catch((err) => ingredient.ingredient),
-      quantity: ingredient.quantity,
+      ingredient: await getIngredient(data.ingredient).catch((err) => data.ingredient),
+      quantity: data.quantity,
     };
   });
 

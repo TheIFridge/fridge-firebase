@@ -10,7 +10,7 @@ import {FlaggedData, PartialIngredient} from "@api/food/types";
  * @param {Response} response
  * @return {Promise<Response>}
  */
-export async function updateReportedIngredient(request: Request, response: Response): Promise<Response<any>> {
+export async function updateReportedIngredient(request: Request, response: Response): Promise<Response> {
   const flaggedData: FlaggedData = {
     reason: request.body.reason,
     date: Date.now(),
@@ -19,7 +19,7 @@ export async function updateReportedIngredient(request: Request, response: Respo
   const ingredientData: PartialIngredient = {
     identifier: request.params.ingredientId,
     flagged: {
-      flagged: request.body.flagged,
+      flagged: request.body.flagged ?? true,
       reasons: {[request.user.userId]: flaggedData},
     },
   };

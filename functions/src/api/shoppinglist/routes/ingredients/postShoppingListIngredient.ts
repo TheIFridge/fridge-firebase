@@ -1,7 +1,10 @@
 import {Request, Response} from "express";
 
 import * as shoppingList from "@api/shoppinglist/shoppinglist";
+import * as inventory from "@api/inventory/inventory";
+
 import {ShoppingIngredient} from "@api/shoppinglist/types";
+import {UserIngredientData} from "@api/inventory/types";
 
 /**
  *
@@ -18,6 +21,13 @@ export async function postShoppingListIngredient(request: Request, response: Res
     ingredient: request.body.ingredient,
     quantity: request.body.quantity,
   };
+
+  const ingredient: UserIngredientData = {
+    ingredient: request.body.ingredient,
+    quantity: request.body.quantity,
+  };
+
+  inventory.updateInventoryItem(userId, shoppingIngredientId, ingredient);
 
   return shoppingList.updateShoppingListIngredient(userId, shoppingListId, shoppingIngredientId, shoppingIngredient)
       .then((writeResult) => {

@@ -65,6 +65,35 @@ export async function queryIngredients(ingredientName: string): Promise<Ingredie
 
 /**
  *
+ * @param {string} ingredientName
+ * @return {Promise<Ingredint[]>}
+ */
+export async function getReportedIngredients(): Promise<Ingredient[]> {
+  const ingredientCollection = await db.collection("ingredient")
+      .where("flagged.flagged", "==", true)
+      .get();
+
+  const ingredients: Ingredient[] = ingredientCollection.docs.flatMap((doc) => {
+    const currentData = doc.data();
+
+    const ingredientData: Ingredient = {
+      identifier: currentData.identifier,
+      name: currentData.name,
+      generic_name: currentData.generic_name,
+      stores: currentData.stores,
+      description: currentData.description,
+      images: currentData.images,
+    };
+
+    return ingredientData;
+  });
+
+  return ingredients;
+}
+
+
+/**
+ *
  * @param {string} identifier
  * @return {Promise<Ingredient>}
  */

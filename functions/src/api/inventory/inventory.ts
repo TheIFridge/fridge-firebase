@@ -1,5 +1,5 @@
 import {getIngredient} from "@api/food/ingredients";
-import {DocumentData, WriteResult} from "@google-cloud/firestore";
+import {WriteResult} from "@google-cloud/firestore";
 
 import {db} from "@utils/admin";
 
@@ -134,16 +134,9 @@ async function addInventoryItem(userId: string, ingredientId: string, data: User
  * @param {UserIngredientData} data
  * @return {Promise<DocumentData>}
  */
-async function updateInventoryItem(userId: string, ingredientId: string, data: UserIngredientData) {
-  return new Promise<DocumentData>((response, reject) => {
-    return db.collection(INVENTORY_COLLECTION).doc(userId).collection("ingredient").doc(ingredientId).set(data)
-        .then((result) => {
-          response(result);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-  });
+export async function updateInventoryItem(userId: string, ingredientId: string, data: UserIngredientData) {
+  const doc = db.collection(INVENTORY_COLLECTION).doc(userId).collection("ingredient").doc(ingredientId);
+  return await doc.set(data);
 }
 
 /**
@@ -165,5 +158,5 @@ export async function deleteInventoryItem(userId: string, ingredientId: string) 
 }
 
 export {getInventoryData, updateInventoryData, getInventoryItems,
-  getInventoryItem, addInventoryItem, updateInventoryItem};
+  getInventoryItem, addInventoryItem};
 

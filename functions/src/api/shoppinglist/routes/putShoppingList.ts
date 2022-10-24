@@ -1,7 +1,6 @@
 import {Request, Response} from "express";
 
 import * as shoppingList from "@api/shoppinglist/shoppinglist";
-
 /**
  *
  * @param {Request} request

@@ -28,6 +28,7 @@ export interface UserIngredientData {
     ingredient: string | Ingredient;
     quantity: number;
     expiry?: Date;
+    flagged?: boolean;
 }
 
 export interface UserIngredientError {

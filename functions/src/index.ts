@@ -63,17 +63,16 @@ app.get("/ingredient/:ingredientId", isAuthenticated, food.getIngredient);
 app.post("/ingredient/:ingredientId", isAdministrator, food.updateIngredient);
 app.put("/ingredient/:ingredientId", isAdministrator, food.addIngredient);
 
-app.get("/ingredient/reports", isAdministrator, food.getReportedIngredients);
 app.put("/ingredient/:ingredientId/report", isAdministrator, food.updateReportedIngredient);
 app.post("/ingredient/:ingredientId/report", isAdministrator, food.updateReportedIngredient);
 app.delete("/ingredient/:ingredientId/report", isAdministrator, food.updateReportedIngredient);
 
-app.get("/ingredient/reports", isAuthenticated, food.getIngredient);
 app.get("/ingredient/:ingredientId/reports", isAuthenticated, food.getIngredient);
 app.post("/ingredient/:ingredientId/reports", isAdministrator, food.updateIngredient);
 
 app.get("/ingredients", isAuthenticated, food.getIngredients);
 app.post("/ingredients/query", isAuthenticated, food.queryIngredients);
+app.get("/ingredients/reports", isAdministrator, food.getReportedIngredients);
 
 app.get("/recipe/:recipeId", isAuthenticated, food.getRecipe);
 app.post("/recipe/:recipeId", isAdministrator, food.updateRecipe);
