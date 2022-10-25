@@ -9,7 +9,7 @@ const middleware = () => {
     //   max: 100, // limit each IP to 100 requests per windowMs
     // }),
     // helmet(),
-    cors({origin: "http://localhost:3000", credentials: true},),
+    cors({origin: ["http://frid.ge", "http://localhost:3000", "http://localhost"], credentials: true},),
   ];
 };
 
